@@ -3,6 +3,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(UMSDatabaseContext))]
-    partial class UMSDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220331135404_CreateAdminStaff")]
+    partial class CreateAdminStaff
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,25 +81,6 @@ namespace Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("Data.Models.Teacher", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("Data.models.User", b =>
@@ -181,17 +164,6 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Models.Teacher", b =>
-                {
-                    b.HasOne("Data.models.User", "User")
-                        .WithOne("Teacher")
-                        .HasForeignKey("Data.Models.Teacher", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Data.Models.UserProfile", b =>
                 {
                     b.HasOne("Data.models.User", "User")
@@ -214,9 +186,6 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Student")
-                        .IsRequired();
-
-                    b.Navigation("Teacher")
                         .IsRequired();
 
                     b.Navigation("UserProfile")

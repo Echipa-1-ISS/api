@@ -10,6 +10,7 @@ namespace Data.Models
     {
         Admin = 1, 
         Teacher = 2, 
-        Student = 3
+        Student = 3,
+        DepartmentChief = 4
     }
 }

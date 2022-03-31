@@ -15,4 +15,8 @@ public class UMSDatabaseContext : DbContext
     public DbSet<Group> Groups { get; set; }
 
     public DbSet<Student> Students { get; set;}
+
+    public DbSet<AdminStaff> AdminStaffs { get; set; }
+
+    public DbSet<Teacher> Teachers { get; set; }
 }

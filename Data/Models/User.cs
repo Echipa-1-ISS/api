@@ -17,4 +17,8 @@ public class User
     public UserProfile UserProfile { get; set; }
 
     public Student Student { get; set; }
+
+    public AdminStaff AdminStaff{ get; set;}
+
+    public Teacher Teacher { get; set; }
 }
