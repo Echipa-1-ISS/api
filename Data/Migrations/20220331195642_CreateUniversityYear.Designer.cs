@@ -3,6 +3,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(UMSDatabaseContext))]
-    partial class UMSDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220331195642_CreateUniversityYear")]
+    partial class CreateUniversityYear
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,27 +59,6 @@ namespace Data.Migrations
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("Data.Models.Semester", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("SemesterDetails")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UniversityYearID")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UniversityYearID");
-
-                    b.ToTable("Semesters");
-                });
-
             modelBuilder.Entity("Data.Models.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -102,29 +83,6 @@ namespace Data.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("Data.Models.StudentUniversityYear", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UniversityYearId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("UniversityYearId");
-
-                    b.ToTable("StudentUniversityYears");
-                });
-
             modelBuilder.Entity("Data.Models.Teacher", b =>
                 {
                     b.Property<int>("Id")
@@ -142,22 +100,6 @@ namespace Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Teachers");
-                });
-
-            modelBuilder.Entity("Data.Models.UniversityYear", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UniversityYears");
                 });
 
             modelBuilder.Entity("Data.models.User", b =>
@@ -222,17 +164,6 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Models.Semester", b =>
-                {
-                    b.HasOne("Data.Models.UniversityYear", "UniversityYear")
-                        .WithMany("Semesters")
-                        .HasForeignKey("UniversityYearID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UniversityYear");
-                });
-
             modelBuilder.Entity("Data.Models.Student", b =>
                 {
                     b.HasOne("Data.Models.Group", "Group")
@@ -250,25 +181,6 @@ namespace Data.Migrations
                     b.Navigation("Group");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Data.Models.StudentUniversityYear", b =>
-                {
-                    b.HasOne("Data.Models.Student", "Student")
-                        .WithMany("StudentUniversityYears")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Models.UniversityYear", "UniversityYear")
-                        .WithMany("StudentUniversityYears")
-                        .HasForeignKey("UniversityYearId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-
-                    b.Navigation("UniversityYear");
                 });
 
             modelBuilder.Entity("Data.Models.Teacher", b =>
@@ -296,18 +208,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Models.Group", b =>
                 {
                     b.Navigation("Students");
-                });
-
-            modelBuilder.Entity("Data.Models.Student", b =>
-                {
-                    b.Navigation("StudentUniversityYears");
-                });
-
-            modelBuilder.Entity("Data.Models.UniversityYear", b =>
-                {
-                    b.Navigation("Semesters");
-
-                    b.Navigation("StudentUniversityYears");
                 });
 
             modelBuilder.Entity("Data.models.User", b =>

@@ -19,4 +19,12 @@ public class UMSDatabaseContext : DbContext
     public DbSet<AdminStaff> AdminStaffs { get; set; }
 
     public DbSet<Teacher> Teachers { get; set; }
+
+    public DbSet<StudentUniversityYear> StudentUniversityYears { get; set; }
+
+    public DbSet<UniversityYear> UniversityYears { get; set; }
+
+    public DbSet<Semester> Semesters { get; set; }
+
+
 }

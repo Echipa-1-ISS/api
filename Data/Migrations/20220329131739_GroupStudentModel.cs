@@ -28,7 +28,8 @@ namespace Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GroupId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    SpecializationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,6 +58,7 @@ namespace Data.Migrations
                 table: "Students",
                 column: "UserId",
                 unique: true);
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
