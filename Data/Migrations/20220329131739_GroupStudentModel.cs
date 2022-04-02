@@ -29,7 +29,6 @@ namespace Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GroupId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    SpecializationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

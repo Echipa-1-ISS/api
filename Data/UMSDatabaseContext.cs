@@ -25,6 +25,7 @@ public class UMSDatabaseContext : DbContext
     public DbSet<UniversityYear> UniversityYears { get; set; }
 
     public DbSet<Semester> Semesters { get; set; }
+    public DbSet<Specialization> Specializations { get; set; }
 
 
 }
