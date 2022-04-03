@@ -14,5 +14,6 @@ namespace Data.Models
         public Student Student { get; set; }
         public UniversityYear UniversityYear { get; set; }
     
+        public List<CourseEnrolments> Enrolments { get; set; }
     }
 }

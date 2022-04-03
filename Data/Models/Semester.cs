@@ -12,6 +12,7 @@ namespace Data.Models
         public int UniversityYearID { get; set; }
         public int SemesterDetails { get; set; }
         public UniversityYear UniversityYear { get; set; }
+        public List<Courses> Courses { get; set; }
 
     }
 }
