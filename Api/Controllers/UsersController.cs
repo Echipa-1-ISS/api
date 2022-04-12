@@ -14,7 +14,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.Language.CodeGeneration;
 using Microsoft.IdentityModel.Tokens;
-
+using Business.Services;
+using BCrypt.Net;
 namespace Api.Controllers
 {
     [Authorize]
@@ -24,21 +25,23 @@ namespace Api.Controllers
     {
         private UMSDatabaseContext _context;
         private JWTService _jwtService;
+        private UserService _userService;
 
-        public UsersController(UMSDatabaseContext context, JWTService jwtService)
+        public UsersController(UMSDatabaseContext context, JWTService jwtService, UserService userService)
         {
             _context = context;
             _jwtService = jwtService;
+            _userService = userService;
         }
         
         [HttpGet()]
-        [AuthorizeRoles(Roles.Admin)]
+        [AllowAnonymous]
         public List<User> GetUsers()
         {
             return _context.Users.ToList();
         }
 
-        [AuthorizeRoles(Roles.Admin)]
+        [AllowAnonymous]
         [HttpPost()]
         public int AddUser(AddUserRequest request)
         {
@@ -46,7 +49,7 @@ namespace Api.Controllers
             {
                 Username = request.Username,
                 Email = request.Email,
-                Password = request.Password,
+                Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
                 Role = request.Role
             };
             
@@ -58,14 +61,9 @@ namespace Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("/login")]
-        public string Authenticate()
+        public string Authenticate(LoginRequest request)
         {
-            return _jwtService.GenerateJWT(new User
-            {
-                Role = Roles.Admin,
-                Email = "test@test.com",
-                Username = "test"
-            });
+            return _userService.Login(request.Username,request.Password);
         }
     }
 }

@@ -1,4 +1,5 @@
 using Api.Extensions;
+using Business.Services;
 using Data;
 using Infrastructure.Models;
 using Infrastructure.Services;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 
 namespace Api
 {
@@ -32,7 +34,7 @@ namespace Api
             services.AddJWTAuthentication(Configuration);
 
             services.AddTransient<JWTService>();
-
+            services.AddTransient<UserService>();
             services.Configure<JWTSettings>(Configuration.GetSection("TokenConfig"));
         }
 
