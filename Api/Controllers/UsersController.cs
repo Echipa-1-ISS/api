@@ -60,7 +60,7 @@ namespace Api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("/login")]
+        [HttpPost("login")]
         public string Authenticate(LoginRequest request)
         {
             return _userService.Login(request.Username,request.Password);

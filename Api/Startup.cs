@@ -32,6 +32,14 @@ namespace Api
 
             services.AddSwagger();
             services.AddJWTAuthentication(Configuration);
+            
+            services.AddCors(options =>
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                }));
 
             services.AddTransient<JWTService>();
             services.AddTransient<UserService>();
@@ -51,6 +59,7 @@ namespace Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();
