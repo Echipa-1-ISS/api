@@ -1,4 +1,5 @@
 using Api.Extensions;
+using Business.Services;
 using Data;
 using Infrastructure.Models;
 using Infrastructure.Services;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 
 namespace Api
 {
@@ -30,9 +32,17 @@ namespace Api
 
             services.AddSwagger();
             services.AddJWTAuthentication(Configuration);
+            
+            services.AddCors(options =>
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                }));
 
             services.AddTransient<JWTService>();
-
+            services.AddTransient<UserService>();
             services.Configure<JWTSettings>(Configuration.GetSection("TokenConfig"));
         }
 
@@ -49,6 +59,7 @@ namespace Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();

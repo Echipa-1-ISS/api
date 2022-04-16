@@ -1,16 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
-using Api.Attributes;
 using Api.Requests;
 using Data;
 using Data.models;
-using Data.Models;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Business.Services;
+using Business.DTOs;
 
-namespace Api.Controllers
-{
+namespace Api.Controllers {
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -18,28 +17,30 @@ namespace Api.Controllers
     {
         private UMSDatabaseContext _context;
         private JWTService _jwtService;
+        private UserService _userService;
 
-        public UsersController(UMSDatabaseContext context, JWTService jwtService)
+        public UsersController(UMSDatabaseContext context, JWTService jwtService, UserService userService)
         {
             _context = context;
             _jwtService = jwtService;
+            _userService = userService;
         }
         
         [HttpGet()]
-        [AuthorizeRoles(Roles.Admin)]
+        [AllowAnonymous]
         public List<User> GetUsers()
         {
             return _context.Users.ToList();
         }
 
-        [AuthorizeRoles(Roles.Admin)]
+        [AllowAnonymous]
         [HttpPost()]
         public int AddUser(AddUserRequest request)
         {
             var user = new User
             {
                 Username = request.Username,
-                Password = request.Password,
+                Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
                 Role = request.Role
             };
             
@@ -50,14 +51,10 @@ namespace Api.Controllers
         }
         
         [AllowAnonymous]
-        [HttpPost("/login")]
-        public string Authenticate()
+        [HttpPost("login")]
+        public LoginResponse Authenticate(LoginRequest request)
         {
-            return _jwtService.GenerateJWT(new User
-            {
-                Role = Roles.Admin,
-                Username = "test"
-            });
+            return _userService.Login(request.Username,request.Password);
         }
     }
 }

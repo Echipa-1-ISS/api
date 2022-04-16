@@ -1,10 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{D4A23CB5-599B-4F45-80C4-E7BA03EEEC5A}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{D4A23CB5-599B-4F45-80C4-E7BA03EEEC5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{C8D62EDD-A5DC-4B35-98A7-D049A47279D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{C8D62EDD-A5DC-4B35-98A7-D049A47279D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{5057F656-972E-4BDD-B669-D05A440B344C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{5057F656-972E-4BDD-B669-D05A440B344C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{3448BDB7-36AA-40C6-8F5F-A66E0957E085}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +29,15 @@ Global
 		{5057F656-972E-4BDD-B669-D05A440B344C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5057F656-972E-4BDD-B669-D05A440B344C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5057F656-972E-4BDD-B669-D05A440B344C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3448BDB7-36AA-40C6-8F5F-A66E0957E085}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3448BDB7-36AA-40C6-8F5F-A66E0957E085}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3448BDB7-36AA-40C6-8F5F-A66E0957E085}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3448BDB7-36AA-40C6-8F5F-A66E0957E085}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D6E3F9FF-057C-4E7D-A225-868EAC4F77A4}
 	EndGlobalSection
 EndGlobal
