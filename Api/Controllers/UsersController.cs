@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Business.Services;
 using Business.DTOs;
+using Data.Models;
 
 namespace Api.Controllers {
     [Authorize]
@@ -41,7 +42,13 @@ namespace Api.Controllers {
             {
                 Username = request.Username,
                 Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                Role = request.Role
+                Role = request.Role,
+                UserProfile = new UserProfile {
+                    Age = request.UserProfile.Age,
+                    Email = request.UserProfile.Email,
+                    Fullname = request.UserProfile.Fullname,
+                    ProfileImageUrl = request.UserProfile.ProfileImageUrl
+                }
             };
             
             _context.Users.Add(user);
