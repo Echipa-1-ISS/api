@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Razor.Language.CodeGeneration;
 using Microsoft.IdentityModel.Tokens;
 using Business.Services;
 using BCrypt.Net;
+using Business.DTOs;
+
 namespace Api.Controllers
 {
     [Authorize]
@@ -61,7 +63,7 @@ namespace Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public string Authenticate(LoginRequest request)
+        public LoginResponse Authenticate(LoginRequest request)
         {
             return _userService.Login(request.Username,request.Password);
         }

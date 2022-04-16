@@ -9,7 +9,7 @@ using Data;
 using Data.models;
 using Infrastructure.Services;
 using Business;
-
+using Business.DTOs;
 
 namespace Business.Services;
 public class UserService {
@@ -21,8 +21,8 @@ public class UserService {
         _jWTService = jWTService;
     }
 
-    public string Login(string username, string password) {
-        User user = _context.Users.Where(u => u.Username == username).FirstOrDefault();
+    public LoginResponse Login(string username, string password) {
+        User user = _context.Users.FirstOrDefault(x => x.Username.Equals(username));
 
         if (user == null) {
             throw new Exception("Username doesn't exist!");
@@ -32,6 +32,9 @@ public class UserService {
             throw new Exception("Incorrect password!");
 
 
-        return _jWTService.GenerateJWT(user);
+        return new LoginResponse{ 
+            Token = _jWTService.GenerateJWT(user),
+            UserId = user.Id 
+        };
     }
 }
