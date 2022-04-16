@@ -23,7 +23,6 @@ public class JWTService
         {
             new Claim(ClaimTypes.Role, user.Role.ToString()),
             new Claim(ClaimTypes.NameIdentifier, user.Username),
-            new Claim(ClaimTypes.Email, user.Email)
         };
         
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.TokenKey));

@@ -38,5 +38,4 @@ public class UMSDatabaseContext : DbContext
 
         //  modelBuilder.Entity<CourseEnrolment>.HasOne<Course>(ce => ce.Course).WithMany(c => c.CourseEnrolments).OnDelete(DeleteBehavior.Restrict);
     }
-
 }

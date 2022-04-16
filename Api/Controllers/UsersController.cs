@@ -1,9 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using Api.Attributes;
 using Api.Requests;
 using Data;
@@ -12,8 +8,6 @@ using Data.Models;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Razor.Language.CodeGeneration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Controllers
 {
@@ -45,7 +39,6 @@ namespace Api.Controllers
             var user = new User
             {
                 Username = request.Username,
-                Email = request.Email,
                 Password = request.Password,
                 Role = request.Role
             };
@@ -55,7 +48,7 @@ namespace Api.Controllers
 
             return user.Id;
         }
-
+        
         [AllowAnonymous]
         [HttpPost("/login")]
         public string Authenticate()
@@ -63,7 +56,6 @@ namespace Api.Controllers
             return _jwtService.GenerateJWT(new User
             {
                 Role = Roles.Admin,
-                Email = "test@test.com",
                 Username = "test"
             });
         }
