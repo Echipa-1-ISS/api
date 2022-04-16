@@ -1,25 +1,15 @@
-using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using Api.Attributes;
 using Api.Requests;
 using Data;
 using Data.models;
-using Data.Models;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Razor.Language.CodeGeneration;
-using Microsoft.IdentityModel.Tokens;
 using Business.Services;
-using BCrypt.Net;
 using Business.DTOs;
 
-namespace Api.Controllers
-{
+namespace Api.Controllers {
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -50,7 +40,6 @@ namespace Api.Controllers
             var user = new User
             {
                 Username = request.Username,
-                Email = request.Email,
                 Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
                 Role = request.Role
             };
