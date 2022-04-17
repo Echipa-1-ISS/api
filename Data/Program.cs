@@ -1,4 +1,4 @@
-using Data.models;
+﻿using Data.models;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +15,7 @@ namespace Data
             dbContext.Database.Migrate();
 
             SeedUsers(dbContext);
+            SeedSpecialization(dbContext);
         }
 
         public static void SeedUsers(UMSDatabaseContext context)
@@ -40,6 +41,91 @@ namespace Data
             }
 
             // add teacher, add adminStaff
+            context.SaveChanges();
+        }
+
+        public static void SeedSpecialization(UMSDatabaseContext context)
+        {
+            var specialization = new Specialization()
+            {
+                Name = "Informatică în limba română"
+            };
+
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Informatică în limba română")) is null)
+            {
+                context.Specializations.Add(specialization);
+            };
+
+            specialization = new Specialization()
+            {
+                Name = "Informatică în limba engleză"
+            };
+
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Informatică în limba engleză")) is null)
+            {
+                context.Specializations.Add(specialization);
+            };
+
+            specialization = new Specialization()
+            {
+                Name = "Informatică în limba germană"
+            };
+
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Informatică în limba germană")) is null)
+            {
+                context.Specializations.Add(specialization);
+            };
+
+            specialization = new Specialization()
+            {
+                Name = "Informatică în limba maghiară"
+            };
+
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Informatică în limba maghiară")) is null)
+            {
+                context.Specializations.Add(specialization);
+            };
+
+            specialization = new Specialization()
+            {
+                Name = "Matematică în limba română"
+            };
+
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Matematică în limba română")) is null)
+            {
+                context.Specializations.Add(specialization);
+            };
+
+            specialization = new Specialization()
+            {
+                Name = "Matematică în limba engleză"
+            };
+
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Matematică în limba engleză")) is null)
+            {
+                context.Specializations.Add(specialization);
+            };
+
+            specialization = new Specialization()
+            {
+                Name = "Matematică în limba germană"
+            };
+
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Matematică în limba germană")) is null)
+            {
+                context.Specializations.Add(specialization);
+            };
+
+            specialization = new Specialization()
+            {
+                Name = "Matematică în limba română"
+            };
+
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Matematică în limba maghiară")) is null)
+            {
+                context.Specializations.Add(specialization);
+            };
+
             context.SaveChanges();
         }
     }
