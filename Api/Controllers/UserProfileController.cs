@@ -38,7 +38,7 @@ namespace Api.Controllers {
             return userProfile.Id;
         }
 
-        [HttpGet("id")]
+        [HttpGet()]
         [AllowAnonymous]
         public UserProfileDetails GetUserDetails(int UserId) {
             return _service.GetUserDetails(UserId);
