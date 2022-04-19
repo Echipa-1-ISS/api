@@ -15,14 +15,10 @@ namespace Business.Services {
         }
 
         public UserProfileDetails GetUserDetails(int UserId) {
-
-            if (_context.Users.FirstOrDefault(u => u.Id == UserId) is null)
-                throw new Exception("User doesn't exist!");
-
             var userProfile = _context.UserProfiles.FirstOrDefault(p => p.UserId == UserId);
 
             if (userProfile == null)
-                throw new Exception("UserProfile doesn't exist!");
+                throw new Exception("User doesn't exist!");
 
             return new UserProfileDetails {
                 Age = userProfile.Age,
