@@ -40,8 +40,8 @@ namespace Api.Controllers {
 
         [HttpGet()]
         [AllowAnonymous]
-        public UserProfileDetails GetUserDetails(int UserId) {
-            return _service.GetUserDetails(UserId);
+        public UserProfileDetails GetUserDetails(int userId) {
+            return _service.GetUserDetails(userId);
         }
     }
 }
