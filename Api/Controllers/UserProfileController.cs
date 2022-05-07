@@ -22,14 +22,14 @@ namespace Api.Controllers {
         }
 
         [AllowAnonymous]
-        [HttpPost()]
-        public int AddUserProfile(AddUserProfileRequest request) {
+        [HttpPost("add")]
+        public int AddUserProfile(AddUserProfileRequest Request) {
             var userProfile = new UserProfile {
-                Age = request.Age,
-                Email = request.Email,
-                Fullname = request.Fullname,
-                UserId = request.UserId,
-                ProfileImageUrl = request.ProfileImageUrl
+                Age = Request.Age,
+                Email = Request.Email,
+                Fullname = Request.Fullname,
+                UserId = Request.UserId,
+                ProfileImageUrl = Request.ProfileImageUrl
             };
 
             _context.UserProfiles.Add(userProfile);
@@ -42,6 +42,13 @@ namespace Api.Controllers {
         [AllowAnonymous]
         public UserProfileDetails GetUserDetails(int userId) {
             return _service.GetUserDetails(userId);
+        }
+
+        [HttpPost("update")]
+        [AllowAnonymous]
+        public bool UpdateUserProfile(UpdateUserProfileRequest Request) {
+            _service.UpdateUserProfile(Request.UserId,Request.Fullname,Request.Age,Request.ProfileImageUrl);
+            return true;
         }
     }
 }

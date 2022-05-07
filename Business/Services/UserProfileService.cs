@@ -1,5 +1,6 @@
 ﻿using Business.DTOs;
 using Data;
+using Data.models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,21 @@ namespace Business.Services {
                 ProfileImageUrl = userProfile.ProfileImageUrl,
                 Fullname = userProfile.Fullname
             };
+        }
+
+        public bool UpdateUserProfile(int UserId, string Fullname, int Age, string ImageURL) {
+            var userProfile = _context.UserProfiles.FirstOrDefault(u => u.UserId == UserId);
+
+            if (Fullname == "" || Age < 14)
+                throw new Exception("Invalid input!");
+
+            userProfile.Fullname = Fullname;
+            userProfile.Age = Age;
+            userProfile.ProfileImageUrl = ImageURL;
+            _context.UserProfiles.Update(userProfile);
+            _context.SaveChanges();
+          
+            return true;
         }
     }
 }
