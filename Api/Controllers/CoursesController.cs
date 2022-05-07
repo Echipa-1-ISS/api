@@ -1,4 +1,5 @@
-﻿using Business.Services;
+﻿using Business.DTOs;
+using Business.Services;
 using Data;
 using Data.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -20,10 +21,18 @@ public class CoursesController : ControllerBase {
         _service = service;
     }
 
-    [HttpGet()]
+    [HttpGet("courses")]
     [AllowAnonymous]
     public List<Courses> GetCourses() {
         return _context.Courses.ToList();
     }
-        
+
+
+    [HttpGet("semestersAndSpecializations")]
+    [AllowAnonymous]
+    public SemestersAndSpecializationsResponse GetSemestersAndSpecializations() {
+        return _service.GetSemestersAndSpecializations();
+    }
+
+
 }
