@@ -13,6 +13,8 @@ namespace Data.Models
         public int UniversityYearId { get; set; }
         public Student Student { get; set; }
         public UniversityYear UniversityYear { get; set; }
+
+        public DateTime SignatureDate { get; set; }
     
         public List<CourseEnrolments> Enrolments { get; set; }
     }
