@@ -22,26 +22,22 @@ namespace Api.Controllers {
         }
 
         [AllowAnonymous]
-        [HttpPost()]
+        [HttpPost("add")]
         public int AddUserProfile(AddUserProfileRequest request) {
-            var userProfile = new UserProfile {
-                Age = request.Age,
-                Email = request.Email,
-                Fullname = request.Fullname,
-                UserId = request.UserId,
-                ProfileImageUrl = request.ProfileImageUrl
-            };
-
-            _context.UserProfiles.Add(userProfile);
-            _context.SaveChanges();
-
-            return userProfile.Id;
+            return _service.AddUserProfile(request.UserId,request.Fullname,request.Age,request.ProfileImageUrl,request.Email);
         }
 
         [HttpGet()]
         [AllowAnonymous]
         public UserProfileDetails GetUserDetails(int userId) {
             return _service.GetUserDetails(userId);
+        }
+
+        [HttpPost("update")]
+        [AllowAnonymous]
+        public bool UpdateUserProfile(UpdateUserProfileRequest Request) {
+            _service.UpdateUserProfile(Request.UserId,Request.Fullname,Request.Age,Request.ProfileImageUrl);
+            return true;
         }
     }
 }
