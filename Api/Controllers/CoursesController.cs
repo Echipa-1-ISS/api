@@ -66,26 +66,16 @@ public class CoursesController : ControllerBase {
 
     [AllowAnonymous]
     [HttpPost("approveCourse")]
-     public int ApproveCourse(ApproveOptionalCourseRequest request)
+     public void ApproveCourse(ApproveOptionalCourseRequest request)
       {
         var courseRows = _context.Courses.Where(o => o.Id == request.CourseId).Count();
 
-        // var contact = new Contact{Id = 1};
-        // contact.FirstName = "Something new";
-        // context.Entry(contact).Property("FirstName").IsModified = true;
-        // context.SaveChanges();
-
         if (courseRows >= 1)
         {
-            var Course = new Courses { Id = request.CourseId };
-            Course.NumberOfStudents = request.MaxStudents;
-            _context.Entry(Course).Property("NumberOfStudents").IsModified = true;
-            _context.SaveChanges();
+            _service.updateCourse(request.CourseId, request.MaxStudents);
 
-            return 1;
         }
-        else
-            return 0; // to do handle error somehow
+        
     }
 
 
