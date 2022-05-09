@@ -1,6 +1,7 @@
 ﻿using Business.DTOs;
 using Data;
 using Data.models;
+using Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,31 @@ namespace Business.Services {
 
         public UserProfileService(UMSDatabaseContext context) {
             _context = context;
+        }
+
+        public int AddUserProfile(int userId, string fullname, int age, string imageUrl, string email) {
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            if ( user == null)
+                throw new Exception("User doesn't exist!");
+
+            if (user.UserProfile != null)
+                throw new Exception("User already has a profile!");
+
+            UserProfile userProfile = new UserProfile {
+                User = user,
+                Fullname = fullname,
+                Age = age,
+                Email = email,
+                ProfileImageUrl=imageUrl
+            };
+
+            user.UserProfile = userProfile;
+
+            _context.Users.Update(user);
+            _context.UserProfiles.Add(userProfile);
+            _context.SaveChanges();
+
+            return userProfile.Id;
         }
 
         public UserProfileDetails GetUserDetails(int UserId) {

@@ -23,19 +23,8 @@ namespace Api.Controllers {
 
         [AllowAnonymous]
         [HttpPost("add")]
-        public int AddUserProfile(AddUserProfileRequest Request) {
-            var userProfile = new UserProfile {
-                Age = Request.Age,
-                Email = Request.Email,
-                Fullname = Request.Fullname,
-                UserId = Request.UserId,
-                ProfileImageUrl = Request.ProfileImageUrl
-            };
-
-            _context.UserProfiles.Add(userProfile);
-            _context.SaveChanges();
-
-            return userProfile.Id;
+        public int AddUserProfile(AddUserProfileRequest request) {
+            return _service.AddUserProfile(request.UserId,request.Fullname,request.Age,request.ProfileImageUrl,request.Email);
         }
 
         [HttpGet()]
