@@ -10,36 +10,68 @@ using System.Threading.Tasks;
 namespace Business.Services;
 public class CoursesService {
     private UMSDatabaseContext _context;
+    private const int MaxOptionalCoursesCount = 2;
 
     public CoursesService(UMSDatabaseContext context) {
         _context = context;
     }
 
-    public SemestersAndSpecializationsResponse GetSemestersAndSpecializations() {
-        SemestersAndSpecializationsResponse SemestersAndSpecializations = new SemestersAndSpecializationsResponse();
-        SemestersAndSpecializations.Semesters = new List<SemesterDTO>();
-        SemestersAndSpecializations.Specializations = new List<SpecializationDTO>();
-        _context.Specializations.ToList().ForEach(
-            s => SemestersAndSpecializations.Specializations.Add(
-                new SpecializationDTO { Id = s.Id, Name = s.Name }
-            ));
-        _context.Semesters.ToList().ForEach(
-            s => SemestersAndSpecializations.Semesters.Add(
-                new SemesterDTO { 
-                    Id = s.Id, 
-                    SemesterDetails = s.SemesterDetails, 
-                    UniversityYear = _context.UniversityYears.FirstOrDefault(y => y.Id == s.UniversityYearID).Year 
-                })
-            );
-
-        return SemestersAndSpecializations;
+    public SemestersAndSpecializationsResponse GetSemestersAndSpecializations()
+    {
+        SemestersAndSpecializationsResponse semestersAndSpecializations = new SemestersAndSpecializationsResponse
+        {
+            Specializations = _context.Specializations.Select(x => new SpecializationDTO
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                }).ToList(),
+            Semesters = _context.Semesters.Select(x => new SemesterDTO
+                {
+                    Id = x.Id, 
+                    SemesterDetails = x.SemesterDetails, 
+                    UniversityYear = _context.UniversityYears.FirstOrDefault(y => y.Id == x.UniversityYearID).Year
+                }).ToList()
+        };
+        
+        return semestersAndSpecializations;
     }
 
-    public void updateCourse(int id, int maxStudents)
+    public void UpdateCourse(int id, int maxStudents)
     {
-        var course = new Courses { Id = id };
+        var course = _context.Courses.FirstOrDefault(x => x.Id ==  id);
+
+        if (course is null)
+        {
+            throw new Exception("Course was not found!");
+        }
+        
         course.NumberOfStudents = maxStudents;
-        _context.Entry(course).Property("NumberOfStudents").IsModified = true;
+
+        _context.SaveChanges();
+    }
+
+    public void AddOptionalCourse(int userId, string name, int semesterId, int specializationId)
+    {
+        var teacherId = _context.Teachers.Where(o => o.UserId == userId).Select(o => o.Id).FirstOrDefault();
+        var optionalCoursesNumber = _context.Courses
+            .Count(o => o.TeacherId == teacherId && o.OptionalFlag == true);
+
+        if (optionalCoursesNumber == MaxOptionalCoursesCount)
+        {
+            throw new Exception("Optional courses number exceeded!");
+        }
+
+        var optionalCourse = new Courses
+        {
+            DisciplineName = name,
+            TeacherId = teacherId,
+            SemesterId = semesterId,
+            OptionalFlag = true,
+            NumberOfStudents = 0,
+            SpecializationID = specializationId
+        };
+        
+        _context.Courses.Add(optionalCourse);
         _context.SaveChanges();
     }
 }
