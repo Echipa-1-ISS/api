@@ -19,8 +19,18 @@ public class CoursesService {
         SemestersAndSpecializationsResponse SemestersAndSpecializations = new SemestersAndSpecializationsResponse();
         SemestersAndSpecializations.Semesters = new List<SemesterDTO>();
         SemestersAndSpecializations.Specializations = new List<SpecializationDTO>();
-        _context.Specializations.ToList().ForEach(s => SemestersAndSpecializations.Specializations.Add(new SpecializationDTO { Id = s.Id, Name = s.Name }));
-        _context.Semesters.ToList().ForEach(s => SemestersAndSpecializations.Semesters.Add(new SemesterDTO { Id = s.Id, SemesterDetails = s.SemesterDetails, UniversityYear = _context.UniversityYears.FirstOrDefault(y => y.Id == s.UniversityYearID).Year }));
+        _context.Specializations.ToList().ForEach(
+            s => SemestersAndSpecializations.Specializations.Add(
+                new SpecializationDTO { Id = s.Id, Name = s.Name }
+            ));
+        _context.Semesters.ToList().ForEach(
+            s => SemestersAndSpecializations.Semesters.Add(
+                new SemesterDTO { 
+                    Id = s.Id, 
+                    SemesterDetails = s.SemesterDetails, 
+                    UniversityYear = _context.UniversityYears.FirstOrDefault(y => y.Id == s.UniversityYearID).Year 
+                })
+            );
 
         return SemestersAndSpecializations;
     }
