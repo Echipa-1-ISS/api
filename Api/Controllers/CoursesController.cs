@@ -36,7 +36,7 @@ public class CoursesController : ControllerBase {
     }
 
     [AllowAnonymous]
-    [HttpPost()]
+    [HttpPost("addOptional")]
     public int AddOptionalCourse(AddOptionalCourseRequest request)
     {
         var teacherId = _context.Teachers.Where(o => o.UserId == request.UserId).Select(o => o.Id).SingleOrDefault();
@@ -62,5 +62,31 @@ public class CoursesController : ControllerBase {
             return 2 - noOptionalCourses;
         }
     }
+  
+
+    [AllowAnonymous]
+    [HttpPost("approveCourse")]
+     public int ApproveCourse(ApproveOptionalCourseRequest request)
+      {
+        var courseRows = _context.Courses.Where(o => o.Id == request.CourseId).Count();
+
+        // var contact = new Contact{Id = 1};
+        // contact.FirstName = "Something new";
+        // context.Entry(contact).Property("FirstName").IsModified = true;
+        // context.SaveChanges();
+
+        if (courseRows >= 1)
+        {
+            var Course = new Courses { Id = request.CourseId };
+            Course.NumberOfStudents = request.MaxStudents;
+            _context.Entry(Course).Property("NumberOfStudents").IsModified = true;
+            _context.SaveChanges();
+
+            return 1;
+        }
+        else
+            return 0; // to do handle error somehow
+    }
+
 
 }
