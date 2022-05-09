@@ -41,8 +41,8 @@ namespace Business.Services {
             return userProfile.Id;
         }
 
-        public UserProfileDetails GetUserDetails(int UserId) {
-            var userProfile = _context.UserProfiles.FirstOrDefault(p => p.UserId == UserId);
+        public UserProfileDetails GetUserDetails(int userId) {
+            var userProfile = _context.UserProfiles.FirstOrDefault(p => p.UserId == userId);
 
             if (userProfile == null)
                 throw new Exception("User doesn't exist!");
