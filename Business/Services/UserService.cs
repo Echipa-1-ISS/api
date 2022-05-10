@@ -32,9 +32,10 @@ public class UserService {
             throw new Exception("Incorrect password!");
 
 
-        return new LoginResponse{ 
+        return new LoginResponse {
             Token = _jWTService.GenerateJWT(user),
-            UserId = user.Id 
+            UserId = user.Id,
+            Role = user.Role
         };
     }
 }
