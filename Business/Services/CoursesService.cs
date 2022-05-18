@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Services;
 public class CoursesService {
@@ -73,5 +74,23 @@ public class CoursesService {
         
         _context.Courses.Add(optionalCourse);
         _context.SaveChanges();
+    }
+
+    public List<TeacherCourse> GetCoursesForTeacher(int userId)
+    {
+        return _context.Teachers.Where(x => x.UserId == userId)
+            .Include(t => t.Courses).ThenInclude(c => c.Specialization)
+            .Include(t => t.Courses).ThenInclude(c => c.Semester).ThenInclude(s => s.UniversityYear)
+            .SelectMany(t => t.Courses)
+            .Select(c => new TeacherCourse
+            {
+                CourseName = c.DisciplineName,
+                Specialization = c.Specialization.Name,
+                IsOptional = c.OptionalFlag,
+                Approved = !c.OptionalFlag || c.NumberOfStudents > 0,
+                MaxStudentsNumber = c.NumberOfStudents,
+                Semester = c.Semester.SemesterDetails,
+                Year = c.Semester.UniversityYear.Year
+            }).ToList();
     }
 }
