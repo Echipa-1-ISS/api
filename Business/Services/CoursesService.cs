@@ -79,8 +79,11 @@ public class CoursesService {
     public List<TeacherCourse> GetCoursesForTeacher(int userId)
     {
         return _context.Teachers.Where(x => x.UserId == userId)
-            .Include(t => t.Courses).ThenInclude(c => c.Specialization)
-            .Include(t => t.Courses).ThenInclude(c => c.Semester).ThenInclude(s => s.UniversityYear)
+            .Include(t => t.Courses)
+                .ThenInclude(c => c.Specialization)
+            .Include(t => t.Courses)
+                .ThenInclude(c => c.Semester)
+                .ThenInclude(s => s.UniversityYear)
             .SelectMany(t => t.Courses)
             .Select(c => new TeacherCourse
             {
@@ -91,6 +94,30 @@ public class CoursesService {
                 MaxStudentsNumber = c.NumberOfStudents,
                 Semester = c.Semester.SemesterDetails,
                 Year = c.Semester.UniversityYear.Year
-            }).ToList();
+            })
+            .ToList();
+    }
+
+    public List<OptionalCourse> GetOptionalCourses()
+    {
+        return _context.Courses.Where(x => x.OptionalFlag)
+            .Include(x => x.Semester)
+                .ThenInclude(x => x.UniversityYear)
+            .Include(x => x.Specialization)
+            .Include(x => x.Teacher)
+                .ThenInclude(t => t.User)
+                .ThenInclude(u => u.UserProfile)
+            .Select(c => new OptionalCourse
+            {
+                CourseId = c.Id,
+                CourseName = c.DisciplineName,
+                Specialization = c.Specialization.Name,
+                Semester = c.Semester.SemesterDetails,
+                Year = c.Semester.UniversityYear.Year,
+                Teacher = c.Teacher.User.UserProfile.Fullname,
+                IsApproved = c.NumberOfStudents > 0
+            })
+            .OrderBy(x => x.IsApproved)
+            .ToList();
     }
 }

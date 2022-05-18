@@ -60,4 +60,11 @@ public class CoursesController : ControllerBase
     {
         return _service.GetCoursesForTeacher(userId);
     }
+
+    [AuthorizeRoles(Roles.DepartmentChief)]
+    [HttpGet("getOptionalCourses")]
+    public List<OptionalCourse> GetOptionalCourses()
+    {
+        return _service.GetOptionalCourses();
+    }
 }
