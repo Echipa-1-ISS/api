@@ -24,7 +24,7 @@ public class UniversityContractService
             .ToList();
         
         return _context.Courses
-            .Where(x => !x.OptionalFlag || x.Enrolments.Count() < x.NumberOfStudents)
+            .Where(x => !x.OptionalFlag || x.Enrolments.Count < x.NumberOfStudents)
             .Where(x => !createdContractYears.Contains(x.Semester.UniversityYear.Year))
             .Include(c => c.Semester)
             .ThenInclude(s => s.UniversityYear)
