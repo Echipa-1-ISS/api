@@ -79,11 +79,6 @@ public class CoursesService {
     public List<TeacherCourse> GetCoursesForTeacher(int userId)
     {
         return _context.Teachers.Where(x => x.UserId == userId)
-            .Include(t => t.Courses)
-                .ThenInclude(c => c.Specialization)
-            .Include(t => t.Courses)
-                .ThenInclude(c => c.Semester)
-                .ThenInclude(s => s.UniversityYear)
             .SelectMany(t => t.Courses)
             .Select(c => new TeacherCourse
             {
@@ -101,12 +96,6 @@ public class CoursesService {
     public List<OptionalCourse> GetOptionalCourses()
     {
         return _context.Courses.Where(x => x.OptionalFlag)
-            .Include(x => x.Semester)
-                .ThenInclude(x => x.UniversityYear)
-            .Include(x => x.Specialization)
-            .Include(x => x.Teacher)
-                .ThenInclude(t => t.User)
-                .ThenInclude(u => u.UserProfile)
             .Select(c => new OptionalCourse
             {
                 CourseId = c.Id,

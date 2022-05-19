@@ -314,8 +314,6 @@ namespace Data
                 context.StudentUniversityYears.Add(contract);
             }
 
-
-
             context.SaveChanges();
 
         }
