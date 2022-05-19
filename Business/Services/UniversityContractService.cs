@@ -27,7 +27,7 @@ public class UniversityContractService
             .Where(x => !x.OptionalFlag || x.Enrolments.Count < x.NumberOfStudents)
             .Where(x => !createdContractYears.Contains(x.Semester.UniversityYear.Year))
             .Include(c => c.Semester)
-            .ThenInclude(s => s.UniversityYear)
+                .ThenInclude(s => s.UniversityYear)
             .Include(c => c.Specialization)
             .Include(c => c.Teacher)
                 .ThenInclude(t => t.User)
@@ -53,6 +53,25 @@ public class UniversityContractService
                 Specialization = c.Specialization.Name,
                 Semester = c.Semester.SemesterDetails,
                 IsOptional = c.OptionalFlag
+            })
+            .ToList();
+    }
+
+    public List<StudentContract> GetStudentContracts(int userId)
+    {
+        return _context.StudentUniversityYears.Where(x => x.Student.UserId == userId)
+            .Select(x => new StudentContract
+            {
+                Year = x.UniversityYear.Year,
+                ContractDisciplineDetails = x.Enrolments.Select(e => new ContractDisciplineDetails
+                {
+                    CourseId = e.Id,
+                    CourseName = e.Course.DisciplineName,
+                    Teacher = e.Course.Teacher.User.UserProfile.Fullname,
+                    Specialization = e.Course.Specialization.Name,
+                    Semester = e.Course.Semester.SemesterDetails,
+                    IsOptional = e.Course.OptionalFlag
+                }).ToList()
             })
             .ToList();
     }

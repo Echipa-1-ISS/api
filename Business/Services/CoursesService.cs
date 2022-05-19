@@ -88,7 +88,8 @@ public class CoursesService {
                 Approved = !c.OptionalFlag || c.NumberOfStudents > 0,
                 MaxStudentsNumber = c.NumberOfStudents,
                 Semester = c.Semester.SemesterDetails,
-                Year = c.Semester.UniversityYear.Year
+                Year = c.Semester.UniversityYear.Year,
+                Teacher = c.Teacher.User.UserProfile.Fullname
             })
             .ToList();
     }
@@ -108,5 +109,20 @@ public class CoursesService {
             })
             .OrderBy(x => x.IsApproved)
             .ToList();
+    }
+
+    public List<TeacherCourse> GetTeachersCourses()
+    {
+        return _context.Courses.Select(c => new TeacherCourse
+        {
+            CourseName = c.DisciplineName,
+            Specialization = c.Specialization.Name,
+            IsOptional = c.OptionalFlag,
+            Approved = !c.OptionalFlag || c.NumberOfStudents > 0,
+            MaxStudentsNumber = c.NumberOfStudents,
+            Semester = c.Semester.SemesterDetails,
+            Year = c.Semester.UniversityYear.Year,
+            Teacher = c.Teacher.User.UserProfile.Fullname
+        }).ToList();
     }
 }

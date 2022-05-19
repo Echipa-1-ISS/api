@@ -9,4 +9,5 @@ public class TeacherCourse
     public int MaxStudentsNumber { get; set; }
     public int Semester { get; set; }
     public int Year { get; set; }
+    public string Teacher { get; set; }
 }

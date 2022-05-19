@@ -43,5 +43,12 @@ namespace Api.Controllers
                 CourseIds = contractDetails.CourseIds
             });
         }
+
+        [AuthorizeRoles(Roles.Student)]
+        [HttpGet("getStudentContracts/{userId}")]
+        public List<StudentContract> GetStudentContracts(int userId)
+        {
+            return _service.GetStudentContracts(userId);
+        }
     }
 }
