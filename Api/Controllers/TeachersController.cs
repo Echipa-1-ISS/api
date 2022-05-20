@@ -21,7 +21,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        [AuthorizeRoles(Roles.DepartmentChief)]
+        [AuthorizeRoles(Roles.DepartmentChief, Roles.Admin)]
         public List<ChiefTeacher> GetTeachers()
         {
             return _service.GetTeachers();

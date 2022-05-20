@@ -48,6 +48,7 @@ namespace Api
             services.AddTransient<UniversityContractService>();
             services.AddTransient<GradesService>();
             services.AddTransient<TeachersService>();
+            services.AddTransient<ReportsService>();
             
             services.Configure<JWTSettings>(Configuration.GetSection("TokenConfig"));
         }
