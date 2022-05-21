@@ -78,7 +78,7 @@ public class UniversityContractService
 
     public void CreateContract(AddAnnualContract contractDetails)
     {
-        var universityYear = _context.UniversityYears.FirstOrDefault(x => x.Id == contractDetails.Year);
+        var universityYear = _context.UniversityYears.FirstOrDefault(x => x.Year == contractDetails.Year);
         var student = _context.Students.FirstOrDefault(x => x.UserId == contractDetails.UserId);
         
         if (universityYear is null || student is null)
