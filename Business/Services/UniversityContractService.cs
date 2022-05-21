@@ -22,6 +22,11 @@ public class UniversityContractService
             .SelectMany(x => x.StudentUniversityYears)
             .Select(x => x.UniversityYear.Year)
             .ToList();
+
+        if (createdContractYears.Count == 2)
+        {
+            return new();
+        }
         
         return _context.Courses
             .Where(x => !x.OptionalFlag || x.Enrolments.Count < x.NumberOfStudents)
