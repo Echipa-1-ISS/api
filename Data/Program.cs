@@ -19,8 +19,8 @@ namespace Data
             SeedSpecialization(dbContext);
             SeedUsers(dbContext);
             seedUniversityYear(dbContext);
-            seedStudentUniversityYear(dbContext);
             seedSemester(dbContext);
+            seedStudentUniversityYear(dbContext);
             seedCourses(dbContext);
             seedCourseEnrolments(dbContext);
 
@@ -95,9 +95,9 @@ namespace Data
 
             CourseBuilder builder = new CourseBuilder();
 
-            builder.setDisciplineName("Algebră");
+            builder.setDisciplineName("Algebră 2");
             builder.setTeacherId(1);
-            builder.setSemesterId(1);
+            builder.setSemesterId(3);
             builder.setOptionalFlag(false);
             builder.setNumberOfStudents(200);
             builder.setSpecializationId(2);
@@ -106,11 +106,10 @@ namespace Data
             {
                 context.Courses.Add(course);
             }
-
-
-            builder.setDisciplineName("Analiză matematică");
+            
+            builder.setDisciplineName("Analiză matematică 2");
             builder.setTeacherId(1);
-            builder.setSemesterId(1);
+            builder.setSemesterId(3);
             builder.setOptionalFlag(false);
             builder.setNumberOfStudents(200);
             builder.setSpecializationId(2);
@@ -121,9 +120,9 @@ namespace Data
             }
 
 
-            builder.setDisciplineName("Sisteme de operare");
+            builder.setDisciplineName("Sisteme de operare 3");
             builder.setTeacherId(1);
-            builder.setSemesterId(1);
+            builder.setSemesterId(4);
             builder.setOptionalFlag(false);
             builder.setNumberOfStudents(200);
             builder.setSpecializationId(2);
@@ -133,9 +132,9 @@ namespace Data
                 context.Courses.Add(course);
             }
 
-            builder.setDisciplineName("OOP");
+            builder.setDisciplineName("OOP 1");
             builder.setTeacherId(1);
-            builder.setSemesterId(2);
+            builder.setSemesterId(4);
             builder.setOptionalFlag(false);
             builder.setNumberOfStudents(200);
             builder.setSpecializationId(2);
@@ -146,9 +145,9 @@ namespace Data
             }
 
 
-            builder.setDisciplineName("Rețele de calculatoare");
+            builder.setDisciplineName("Rețele de calculatoare 123");
             builder.setTeacherId(2);
-            builder.setSemesterId(2);
+            builder.setSemesterId(3);
             builder.setOptionalFlag(false);
             builder.setNumberOfStudents(150);
             builder.setSpecializationId(1);
@@ -159,9 +158,9 @@ namespace Data
             }
 
 
-            builder.setDisciplineName("Baze de date");
+            builder.setDisciplineName("Baze de date 123");
             builder.setTeacherId(2);
-            builder.setSemesterId(2);
+            builder.setSemesterId(4);
             builder.setOptionalFlag(false);
             builder.setNumberOfStudents(200);
             builder.setSpecializationId(1);
@@ -301,7 +300,6 @@ namespace Data
             }
 
             context.SaveChanges();
-
         }
 
         public static void SeedUsers(UMSDatabaseContext context)

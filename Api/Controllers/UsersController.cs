@@ -48,7 +48,14 @@ namespace Api.Controllers {
                     Email = request.UserProfile.Email,
                     Fullname = request.UserProfile.Fullname,
                     ProfileImageUrl = request.UserProfile.ProfileImageUrl
-                }
+                },
+                Student = new Student
+                {
+                    Specialization = _context.Specializations.First(),
+                    Group = _context.Groups.First()
+                },
+                AdminStaff = new(),
+                Teacher = new()
             };
             
             _context.Users.Add(user);
