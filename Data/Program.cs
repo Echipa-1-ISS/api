@@ -1,4 +1,5 @@
-﻿using Data.models;
+﻿using Data.Builders;
+using Data.models;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,15 +10,15 @@ namespace Data
         public static void Main(string[] args)
         {
             var dbContext = new DesignTimeDbContextFactory().CreateDbContext(args);
-            
+
             Console.WriteLine("Starting database migration");
-            
+
             dbContext.Database.Migrate();
 
             SeedGroup(dbContext);
             SeedSpecialization(dbContext);
             SeedUsers(dbContext);
-            seedUniversityYear (dbContext);
+            seedUniversityYear(dbContext);
             seedStudentUniversityYear(dbContext);
             seedSemester(dbContext);
             seedCourses(dbContext);
@@ -27,78 +28,60 @@ namespace Data
 
         public static void seedCourseEnrolments(UMSDatabaseContext context)
         {
-            var enrolment = new CourseEnrolments()
-            {
-                StudentUniversityYearID = 1,
-                CoursesID = 6
-            };
 
+            CourseEnrolmentBuilder builder = new CourseEnrolmentBuilder();
+
+            builder.setStudentUniversityYearId(1);
+            builder.setCoursesId(6);
+            var enrolment = builder.getResult();
             if(context.CoursesEnrolments.FirstOrDefault(x => x.Id.Equals(1)) is null)
             {
                 context.CoursesEnrolments.Add(enrolment);
             }
 
-            enrolment = new CourseEnrolments()
-            {
-                StudentUniversityYearID = 1,
-                CoursesID = 5
-            };
-
+            builder.setStudentUniversityYearId(1);
+            builder.setCoursesId(5);
+            enrolment = builder.getResult();
             if (context.CoursesEnrolments.FirstOrDefault(x => x.Id.Equals(2)) is null)
             {
                 context.CoursesEnrolments.Add(enrolment);
             }
 
-            enrolment = new CourseEnrolments()
-            {
-                StudentUniversityYearID = 2,
-                CoursesID = 1
-            };
-
+            builder.setStudentUniversityYearId(2);
+            builder.setCoursesId(1);
+            enrolment = builder.getResult();
             if (context.CoursesEnrolments.FirstOrDefault(x => x.Id.Equals(3)) is null)
             {
                 context.CoursesEnrolments.Add(enrolment);
             }
 
-            enrolment = new CourseEnrolments()
-            {
-                StudentUniversityYearID = 2,
-                CoursesID = 2
-            };
-
+            builder.setStudentUniversityYearId(2);
+            builder.setCoursesId(2);
+            enrolment = builder.getResult();
             if (context.CoursesEnrolments.FirstOrDefault(x => x.Id.Equals(4)) is null)
             {
                 context.CoursesEnrolments.Add(enrolment);
             }
 
-            enrolment = new CourseEnrolments()
-            {
-                StudentUniversityYearID = 2,
-                CoursesID = 3
-            };
-
+            builder.setStudentUniversityYearId(2);
+            builder.setCoursesId(3);
+            enrolment = builder.getResult();
             if (context.CoursesEnrolments.FirstOrDefault(x => x.Id.Equals(5)) is null)
             {
                 context.CoursesEnrolments.Add(enrolment);
             }
 
-            enrolment = new CourseEnrolments()
-            {
-                StudentUniversityYearID = 3,
-                CoursesID = 5
-            };
-
+            builder.setStudentUniversityYearId(3);
+            builder.setCoursesId(5);
+            enrolment = builder.getResult();
             if (context.CoursesEnrolments.FirstOrDefault(x => x.Id.Equals(6)) is null)
             {
                 context.CoursesEnrolments.Add(enrolment);
             }
 
-            enrolment = new CourseEnrolments()
-            {
-                StudentUniversityYearID = 3,
-                CoursesID = 6
-            };
-
+            builder.setStudentUniversityYearId(3);
+            builder.setCoursesId(6);
+            enrolment = builder.getResult();
             if (context.CoursesEnrolments.FirstOrDefault(x => x.Id.Equals(7)) is null)
             {
                 context.CoursesEnrolments.Add(enrolment);
@@ -109,98 +92,81 @@ namespace Data
 
         public static void seedCourses(UMSDatabaseContext context)
         {
-            var course = new Courses()
-            {
-                DisciplineName = "Algebră",
-                TeacherId = 1,
-                SemesterId = 1,
-                OptionalFlag = false,
-                NumberOfStudents = 200,
-                SpecializationID = 2,
 
-            };
+            CourseBuilder builder = new CourseBuilder();
 
-            if (context.Courses.FirstOrDefault(x => x.Id.Equals(1)) is null)
-            {
-                context.Courses.Add(course);
-            }
-
-            course = new Courses()
-            {
-                DisciplineName = "Analiză matematică",
-                TeacherId = 1,
-                SemesterId = 1,
-                OptionalFlag = false,
-                NumberOfStudents = 200,
-                SpecializationID = 2,
-
-            };
-
-            if (context.Courses.FirstOrDefault(x => x.Id.Equals(2)) is null)
+            builder.setDisciplineName("Algebră");
+            builder.setTeacherId(1);
+            builder.setSemesterId(1);
+            builder.setOptionalFlag(false);
+            builder.setNumberOfStudents(200);
+            builder.setSpecializationId(2);
+            var course = builder.getResult();
+            if (context.Courses.FirstOrDefault(x => x.DisciplineName == course.DisciplineName) is null)
             {
                 context.Courses.Add(course);
             }
 
-            course = new Courses()
-            {
-                DisciplineName = "Sisteme de operare",
-                TeacherId = 1,
-                SemesterId = 2,
-                OptionalFlag = false,
-                NumberOfStudents = 200,
-                SpecializationID = 2,
 
-            };
-
-            if (context.Courses.FirstOrDefault(x => x.Id.Equals(3)) is null)
+            builder.setDisciplineName("Analiză matematică");
+            builder.setTeacherId(1);
+            builder.setSemesterId(1);
+            builder.setOptionalFlag(false);
+            builder.setNumberOfStudents(200);
+            builder.setSpecializationId(2);
+            course = builder.getResult();
+            if (context.Courses.FirstOrDefault(x => x.DisciplineName == course.DisciplineName) is null)
             {
                 context.Courses.Add(course);
             }
 
-            course = new Courses()
-            {
-                DisciplineName = "OOP",
-                TeacherId = 1,
-                SemesterId = 2,
-                OptionalFlag = false,
-                NumberOfStudents = 200,
-                SpecializationID = 2,
 
-            };
-
-            if (context.Courses.FirstOrDefault(x => x.Id.Equals(4)) is null)
+            builder.setDisciplineName("Sisteme de operare");
+            builder.setTeacherId(1);
+            builder.setSemesterId(1);
+            builder.setOptionalFlag(false);
+            builder.setNumberOfStudents(200);
+            builder.setSpecializationId(2);
+            course = builder.getResult();
+            if (context.Courses.FirstOrDefault(x => x.DisciplineName == course.DisciplineName) is null)
             {
                 context.Courses.Add(course);
             }
 
-            course = new Courses()
-            {
-                DisciplineName = "Rețele de calculatoare",
-                TeacherId = 2,
-                SemesterId = 1,
-                OptionalFlag = false,
-                NumberOfStudents = 150,
-                SpecializationID = 1,
-
-            };
-
-            if (context.Courses.FirstOrDefault(x => x.Id.Equals(5)) is null)
+            builder.setDisciplineName("OOP");
+            builder.setTeacherId(1);
+            builder.setSemesterId(2);
+            builder.setOptionalFlag(false);
+            builder.setNumberOfStudents(200);
+            builder.setSpecializationId(2);
+            course = builder.getResult();
+            if (context.Courses.FirstOrDefault(x => x.DisciplineName == course.DisciplineName) is null)
             {
                 context.Courses.Add(course);
             }
 
-            course = new Courses()
+
+            builder.setDisciplineName("Rețele de calculatoare");
+            builder.setTeacherId(2);
+            builder.setSemesterId(2);
+            builder.setOptionalFlag(false);
+            builder.setNumberOfStudents(150);
+            builder.setSpecializationId(1);
+            course = builder.getResult();
+            if (context.Courses.FirstOrDefault(x => x.DisciplineName == course.DisciplineName) is null)
             {
-                DisciplineName = "Baze de date",
-                TeacherId = 2,
-                SemesterId = 1,
-                OptionalFlag = false,
-                NumberOfStudents = 200,
-                SpecializationID = 1,
+                context.Courses.Add(course);
+            }
 
-            };
 
-            if (context.Courses.FirstOrDefault(x => x.Id.Equals(6)) is null)
+            builder.setDisciplineName("Baze de date");
+            builder.setTeacherId(2);
+            builder.setSemesterId(2);
+            builder.setOptionalFlag(false);
+            builder.setNumberOfStudents(200);
+            builder.setSpecializationId(1);
+            course = builder.getResult();
+            if (context.Courses.FirstOrDefault(x => x.DisciplineName == course.DisciplineName) is null)
             {
                 context.Courses.Add(course);
             }
@@ -210,68 +176,52 @@ namespace Data
 
         public static void seedSemester(UMSDatabaseContext context)
         {
-            var sem = new Semester()
-            {
-                UniversityYearID = 1,
-                SemesterDetails = 1
-            };
 
-            if(context.Semesters.FirstOrDefault(x=> x.UniversityYearID.Equals(1) && x.SemesterDetails.Equals(1)) is null)
-            {
-                context.Semesters.Add(sem);
-            }
-
-            sem = new Semester()
-            {
-                UniversityYearID = 1,
-                SemesterDetails = 2
-            };
-
-            if (context.Semesters.FirstOrDefault(x => x.UniversityYearID.Equals(1) && x.SemesterDetails.Equals(2)) is null)
+            SemesterBuilder builder = new SemesterBuilder();
+            builder.setSemesterDetails(1);
+            builder.setUniversityYearId(1);
+            var sem = builder.getResult();
+            if(context.Semesters.FirstOrDefault(x=> x.UniversityYearID.Equals(sem.UniversityYearID) && x.SemesterDetails.Equals(sem.SemesterDetails)) is null)
             {
                 context.Semesters.Add(sem);
             }
 
-            sem = new Semester()
-            {
-                UniversityYearID = 2,
-                SemesterDetails = 1
-            };
-
-            if (context.Semesters.FirstOrDefault(x => x.UniversityYearID.Equals(2) && x.SemesterDetails.Equals(1)) is null)
+            builder.setSemesterDetails(1);
+            builder.setUniversityYearId(2);
+            sem = builder.getResult();
+            if (context.Semesters.FirstOrDefault(x => x.UniversityYearID.Equals(sem.UniversityYearID) && x.SemesterDetails.Equals(sem.SemesterDetails)) is null)
             {
                 context.Semesters.Add(sem);
             }
 
-            sem = new Semester()
-            {
-                UniversityYearID = 2,
-                SemesterDetails = 2
-            };
-
-            if (context.Semesters.FirstOrDefault(x => x.UniversityYearID.Equals(2) && x.SemesterDetails.Equals(2)) is null)
+            builder.setSemesterDetails(2);
+            builder.setUniversityYearId(1);
+            sem = builder.getResult();
+            if (context.Semesters.FirstOrDefault(x => x.UniversityYearID.Equals(sem.UniversityYearID) && x.SemesterDetails.Equals(sem.SemesterDetails)) is null)
             {
                 context.Semesters.Add(sem);
             }
 
-            sem = new Semester()
-            {
-                UniversityYearID = 3,
-                SemesterDetails = 1
-            };
-
-            if (context.Semesters.FirstOrDefault(x => x.UniversityYearID.Equals(3) && x.SemesterDetails.Equals(1)) is null)
+            builder.setSemesterDetails(2);
+            builder.setUniversityYearId(2);
+            sem = builder.getResult();
+            if (context.Semesters.FirstOrDefault(x => x.UniversityYearID.Equals(sem.UniversityYearID) && x.SemesterDetails.Equals(sem.SemesterDetails)) is null)
             {
                 context.Semesters.Add(sem);
             }
 
-            sem = new Semester()
+            builder.setSemesterDetails(3);
+            builder.setUniversityYearId(1);
+            sem = builder.getResult();
+            if (context.Semesters.FirstOrDefault(x => x.UniversityYearID.Equals(sem.UniversityYearID) && x.SemesterDetails.Equals(sem.SemesterDetails)) is null)
             {
-                UniversityYearID = 3,
-                SemesterDetails = 2
-            };
+                context.Semesters.Add(sem);
+            }
 
-            if (context.Semesters.FirstOrDefault(x => x.UniversityYearID.Equals(3) && x.SemesterDetails.Equals(2)) is null)
+            builder.setSemesterDetails(3);
+            builder.setUniversityYearId(2);
+            sem = builder.getResult();
+            if (context.Semesters.FirstOrDefault(x => x.UniversityYearID.Equals(sem.UniversityYearID) && x.SemesterDetails.Equals(sem.SemesterDetails)) is null)
             {
                 context.Semesters.Add(sem);
             }
@@ -281,35 +231,40 @@ namespace Data
 
         public static void seedStudentUniversityYear(UMSDatabaseContext context)
         {
-            var contract = new StudentUniversityYear()
-            {
-                StudentId = 1,
-                UniversityYearId = 1
-            };
 
-            if (context.StudentUniversityYears.FirstOrDefault(x => x.StudentId.Equals(3) && x.UniversityYearId.Equals(1)) is null)
-            {
-                context.StudentUniversityYears.Add(contract);
-            }
+            StudentUniversityYearBuilder builder = new StudentUniversityYearBuilder();
+            builder.setStudentId(1);
+            builder.setUniversityYear(1);
+            var contract = builder.getResult();
 
-            contract = new StudentUniversityYear()
-            {
-                StudentId = 2,
-                UniversityYearId = 2
-            };
-
-            if (context.StudentUniversityYears.FirstOrDefault(x => x.StudentId.Equals(3) && x.UniversityYearId.Equals(1)) is null)
+            if (context.StudentUniversityYears.FirstOrDefault(x => 
+                x.StudentId.Equals(contract.StudentId) && 
+                x.UniversityYearId.Equals(contract.UniversityYearId)) 
+                is null)
             {
                 context.StudentUniversityYears.Add(contract);
             }
 
-            contract = new StudentUniversityYear()
-            {
-                StudentId = 3,
-                UniversityYearId = 3
-            };
+            builder.setStudentId(2);
+            builder.setUniversityYear(2);
+            contract = builder.getResult();
 
-            if (context.StudentUniversityYears.FirstOrDefault(x => x.StudentId.Equals(4) && x.UniversityYearId.Equals(3)) is null)
+            if (context.StudentUniversityYears.FirstOrDefault(x =>
+                 x.StudentId.Equals(contract.StudentId) &&
+                 x.UniversityYearId.Equals(contract.UniversityYearId))
+                 is null)
+            {
+                context.StudentUniversityYears.Add(contract);
+            }
+
+            builder.setStudentId(3);
+            builder.setUniversityYear(3);
+            contract = builder.getResult();
+
+            if (context.StudentUniversityYears.FirstOrDefault(x =>
+                 x.StudentId.Equals(contract.StudentId) &&
+                 x.UniversityYearId.Equals(contract.UniversityYearId))
+                 is null)
             {
                 context.StudentUniversityYears.Add(contract);
             }
@@ -320,34 +275,29 @@ namespace Data
 
         public static void seedUniversityYear(UMSDatabaseContext context)
         {
-            var year1 = new UniversityYear()
-            {
-                Year = 1
-            };
 
-            if(context.UniversityYears.FirstOrDefault(x => x.Year.Equals(1)) is null)
+            UniversityYearBuilder builder = new UniversityYearBuilder();
+            builder.setYear(1);
+            var year = builder.getResult();
+            if(context.UniversityYears.FirstOrDefault(x => x.Year.Equals(year.Year)) is null)
             {
-                context.UniversityYears.Add(year1);
+                context.UniversityYears.Add(year);
             }
 
-            var year2 = new UniversityYear()
-            {
-                Year = 2
-            };
 
-            if (context.UniversityYears.FirstOrDefault(x => x.Year.Equals(2)) is null)
+            builder.setYear(2);
+            year = builder.getResult();
+            if(context.UniversityYears.FirstOrDefault(x => x.Year.Equals(year.Year)) is null)
             {
-                context.UniversityYears.Add(year2);
+                context.UniversityYears.Add(year);
             }
+            
 
-            var year3 = new UniversityYear()
+            builder.setYear(3);
+            year = builder.getResult();
+            if (context.UniversityYears.FirstOrDefault(x => x.Year.Equals(year.Year)) is null)
             {
-                Year = 3
-            };
-
-            if (context.UniversityYears.FirstOrDefault(x => x.Year.Equals(3)) is null)
-            {
-                context.UniversityYears.Add(year3);
+                context.UniversityYears.Add(year);
             }
 
             context.SaveChanges();
@@ -356,177 +306,132 @@ namespace Data
 
         public static void SeedUsers(UMSDatabaseContext context)
         {
-            var student = new User()
-            {
-                Role = Roles.Student,
-                Username = "student",
-                Password = "password", // Bcrypt.hash("pasword")
-                UserProfile = new UserProfile()
-                {
-                    Age = 15,
-                    Email = "student@test.com",
-                    Fullname = "Student fullname",
-                    ProfileImageUrl =
-                        "https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/2020-Chevrolet-Corvette-Stingray/0x0.jpg?fit=crop&format=jpg&crop=4560,2565,x790,y784,safe"
-                }
-            };
-            
-            if (context.Users.FirstOrDefault(x => x.Username.Equals("student")) is null)
-            {
-                context.Users.Add(student);    
-            }
+            StudentBuilder studentBuilder = new StudentBuilder();
+            UserProfileBuilder userProfileBuilder = new UserProfileBuilder();
+            UserBuilder userBuilder = new UserBuilder();
 
-            var adminStaff1 = new User()
-            {
-                Role = Roles.Admin,
-                Username = "adminStaff1",
-                Password = "password1",
-                UserProfile = new UserProfile()
-                {
-                    Age = 30,
-                    Email = "adminStaff1@test.com",
-                    Fullname = "AdminStaff1 fullname",
-                    ProfileImageUrl = "https://www.inkspired.ro/media/catalog/product/cache/1/image/500x500/3de37283ddf23e1390f09983ed9630a3/S/c/Scooby_Doo_artwork_.png"
-                },
-                AdminStaff = new AdminStaff() 
-            };
+            userProfileBuilder.setFullname("AdminStaff1 fullname");
+            userProfileBuilder.setEmail("adminStaff1@test.com");
+            userProfileBuilder.setAge(30);
+            userProfileBuilder.setProfileImage("https://www.inkspired.ro/media/catalog/product/cache/1/image/500x500/3de37283ddf23e1390f09983ed9630a3/S/c/Scooby_Doo_artwork_.png");
 
-            if (context.Users.FirstOrDefault(x => x.Username.Equals("adminStaff1")) is null)
+            userBuilder.setRole(Roles.Admin);
+            userBuilder.setUsername("adminStaff1");
+            userBuilder.setPassword("password");
+            userBuilder.setUserProfile(userProfileBuilder.getResult());
+            userBuilder.setAdminStaff(new AdminStaff());
+            var adminStaff1 = userBuilder.getResult();
+            if (context.Users.FirstOrDefault(x => x.Username.Equals(adminStaff1.Username)) is null)
             {
                 context.Users.Add(adminStaff1);
             }
 
-            var adminStaff2 = new User()
-            {
-                Role = Roles.Admin,
-                Username = "adminStaff2",
-                Password = "password2",
-                UserProfile = new UserProfile()
-                {
-                    Age = 32,
-                    Email = "adminStaff2@test.com",
-                    Fullname = "AdminStaff2 fullname",
-                    ProfileImageUrl = "https://www.inkspired.ro/media/catalog/product/cache/1/image/500x500/3de37283ddf23e1390f09983ed9630a3/S/c/Scooby_Doo_artwork_.png"
-                },
-                AdminStaff = new AdminStaff()
-            };
 
-            if (context.Users.FirstOrDefault(x => x.Username.Equals("adminStaff2")) is null)
+            userProfileBuilder.setFullname("AdminStaff2 fullname");
+            userProfileBuilder.setEmail("adminStaff2@test.com");
+            userProfileBuilder.setAge(35);
+            userProfileBuilder.setProfileImage("https://www.inkspired.ro/media/catalog/product/cache/1/image/500x500/3de37283ddf23e1390f09983ed9630a3/S/c/Scooby_Doo_artwork_.png");
+
+            userBuilder.setRole(Roles.Admin);
+            userBuilder.setUsername("adminStaff2");
+            userBuilder.setPassword("password");
+            userBuilder.setUserProfile(userProfileBuilder.getResult());
+            userBuilder.setAdminStaff(new AdminStaff());
+            var adminStaff2 = userBuilder.getResult();
+            if (context.Users.FirstOrDefault(x => x.Username.Equals(adminStaff2.Username)) is null)
             {
                 context.Users.Add(adminStaff2);
             }
 
-            var teacher1 = new User()
-            {
-                Role = Roles.Teacher,
-                Username = "teacher1",
-                Password = "password3",
-                UserProfile = new UserProfile()
-                {
-                    Age = 26,
-                    Email = "teacher1@test.com",
-                    Fullname = "Teacher1 fullname",
-                    ProfileImageUrl = "https://www.inkspired.ro/media/catalog/product/cache/1/image/500x500/3de37283ddf23e1390f09983ed9630a3/S/c/Scooby_Doo_artwork_.png"
-                },
-                Teacher = new Teacher()
-            };
 
-            if (context.Users.FirstOrDefault(x => x.Username.Equals("teacher1")) is null)
+            userProfileBuilder.setFullname("Teacher1 fullname");
+            userProfileBuilder.setEmail("teacher1@test.com");
+            userProfileBuilder.setAge(26);
+            userProfileBuilder.setProfileImage("https://www.inkspired.ro/media/catalog/product/cache/1/image/500x500/3de37283ddf23e1390f09983ed9630a3/S/c/Scooby_Doo_artwork_.png");
+
+            userBuilder.setRole(Roles.Teacher);
+            userBuilder.setUsername("teacher1");
+            userBuilder.setPassword("password");
+            userBuilder.setUserProfile(userProfileBuilder.getResult());
+            userBuilder.setTeacher(new Teacher());
+            var teacher1 = userBuilder.getResult();
+            if (context.Users.FirstOrDefault(x => x.Username.Equals(teacher1.Username)) is null)
             {
                 context.Users.Add(teacher1);
             }
 
-            var teacher2 = new User()
-            {
-                Role = Roles.Teacher,
-                Username = "teacher2",
-                Password = "password4",
-                UserProfile = new UserProfile()
-                {
-                    Age = 27,
-                    Email = "teacher2@test.com",
-                    Fullname = "Teacher2 fullname",
-                    ProfileImageUrl = "https://www.inkspired.ro/media/catalog/product/cache/1/image/500x500/3de37283ddf23e1390f09983ed9630a3/S/c/Scooby_Doo_artwork_.png"
-                },
-                Teacher = new Teacher()
-            };
+            userProfileBuilder.setFullname("Teacher2 fullname");
+            userProfileBuilder.setEmail("teacher2@test.com");
+            userProfileBuilder.setAge(30);
+            userProfileBuilder.setProfileImage("https://www.inkspired.ro/media/catalog/product/cache/1/image/500x500/3de37283ddf23e1390f09983ed9630a3/S/c/Scooby_Doo_artwork_.png");
 
-            if (context.Users.FirstOrDefault(x => x.Username.Equals("teacher2")) is null)
+            userBuilder.setRole(Roles.Teacher);
+            userBuilder.setUsername("teacher2");
+            userBuilder.setPassword("password");
+            userBuilder.setUserProfile(userProfileBuilder.getResult());
+            userBuilder.setTeacher(new Teacher());
+            var teacher2 = userBuilder.getResult();
+            if (context.Users.FirstOrDefault(x => x.Username.Equals(teacher2.Username)) is null)
             {
                 context.Users.Add(teacher2);
             }
 
-            var student1 = new User()
-            {
-                Role = Roles.Student,
-                Username = "student1",
-                Password = "password5",
-                UserProfile = new UserProfile()
-                {
-                    Age = 19,
-                    Email = "student1@test.com",
-                    Fullname = "Student1 fullname",
-                    ProfileImageUrl = "https://www.inkspired.ro/media/catalog/product/cache/1/image/500x500/3de37283ddf23e1390f09983ed9630a3/S/c/Scooby_Doo_artwork_.png"
-                },
-                Student = new Student()
-                {
-                    GroupId = 1,
-                    SpecializationId = 1
-                }
-            };
 
-            if (context.Users.FirstOrDefault(x => x.Username.Equals("student1")) is null)
+            userProfileBuilder.setFullname("Student1 fullname");
+            userProfileBuilder.setEmail("student1@test.com");
+            userProfileBuilder.setAge(22);
+            userProfileBuilder.setProfileImage("https://www.inkspired.ro/media/catalog/product/cache/1/image/500x500/3de37283ddf23e1390f09983ed9630a3/S/c/Scooby_Doo_artwork_.png");
+
+            studentBuilder.setGroup(context.Groups.FirstOrDefault(g => g.Id == 1));
+            studentBuilder.setSpecialization(context.Specializations.FirstOrDefault(g => g.Id == 1));
+
+            userBuilder.setRole(Roles.Student);
+            userBuilder.setUsername("student1");
+            userBuilder.setPassword("password");
+            userBuilder.setUserProfile(userProfileBuilder.getResult());
+            userBuilder.setStudent(studentBuilder.getResult());
+            var student1 = userBuilder.getResult();
+            if (context.Users.FirstOrDefault(x => x.Username.Equals(student1.Username)) is null)
             {
                 context.Users.Add(student1);
             }
 
-            var student2 = new User()
-            {
-                Role = Roles.Student,
-                Username = "student2",
-                Password = "password6",
-                UserProfile = new UserProfile()
-                {
-                    Age = 19,
-                    Email = "student2@test.com",
-                    Fullname = "Student2 fullname",
-                    ProfileImageUrl = "https://www.inkspired.ro/media/catalog/product/cache/1/image/500x500/3de37283ddf23e1390f09983ed9630a3/S/c/Scooby_Doo_artwork_.png"
-                },
-                Student = new Student()
-                {
-                    GroupId = 2,
-                    SpecializationId = 1
-                }
-            };
+            userProfileBuilder.setFullname("Student2 fullname");
+            userProfileBuilder.setEmail("student2@test.com");
+            userProfileBuilder.setAge(21);
+            userProfileBuilder.setProfileImage("https://www.inkspired.ro/media/catalog/product/cache/1/image/500x500/3de37283ddf23e1390f09983ed9630a3/S/c/Scooby_Doo_artwork_.png");
 
-            if (context.Users.FirstOrDefault(x => x.Username.Equals("student2")) is null)
+            studentBuilder.setGroup(context.Groups.FirstOrDefault(g => g.Id == 2));
+            studentBuilder.setSpecialization(context.Specializations.FirstOrDefault(g => g.Id == 1));
+
+            userBuilder.setRole(Roles.Student);
+            userBuilder.setUsername("student2");
+            userBuilder.setPassword("password");
+            userBuilder.setUserProfile(userProfileBuilder.getResult());
+            userBuilder.setStudent(studentBuilder.getResult());
+            var student2 = userBuilder.getResult();
+            if (context.Users.FirstOrDefault(x => x.Username.Equals(student2.Username)) is null)
             {
                 context.Users.Add(student2);
             }
 
-            student = new User()
-            {
-                Role = Roles.Student,
-                Username = "student3",
-                Password = "password7", // Bcrypt.hash("pasword")
-                UserProfile = new UserProfile()
-                {
-                    Age = 20,
-                    Email = "student7@test.com",
-                    Fullname = "Student7 fullname",
-                    ProfileImageUrl =
-                        "https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/2020-Chevrolet-Corvette-Stingray/0x0.jpg?fit=crop&format=jpg&crop=4560,2565,x790,y784,safe"
-                },
-                Student = new Student()
-                {
-                    GroupId = 2,
-                    SpecializationId = 2
-                }
-            };
+            userProfileBuilder.setFullname("Student3 fullname");
+            userProfileBuilder.setEmail("student3@test.com");
+            userProfileBuilder.setAge(22);
+            userProfileBuilder.setProfileImage("https://www.inkspired.ro/media/catalog/product/cache/1/image/500x500/3de37283ddf23e1390f09983ed9630a3/S/c/Scooby_Doo_artwork_.png");
 
-            if (context.Users.FirstOrDefault(x => x.Username.Equals("student3")) is null)
+            studentBuilder.setGroup(context.Groups.FirstOrDefault(g => g.Id == 2));
+            studentBuilder.setSpecialization(context.Specializations.FirstOrDefault(g => g.Id == 2));
+
+            userBuilder.setRole(Roles.Student);
+            userBuilder.setUsername("student3");
+            userBuilder.setPassword("password");
+            userBuilder.setUserProfile(userProfileBuilder.getResult());
+            userBuilder.setStudent(studentBuilder.getResult());
+            var student3 = userBuilder.getResult();
+            if (context.Users.FirstOrDefault(x => x.Username.Equals(student3.Username)) is null)
             {
-                context.Users.Add(student);
+                context.Users.Add(student3);
             }
 
             // add teacher, add adminStaff
@@ -535,82 +440,67 @@ namespace Data
 
         public static void SeedSpecialization(UMSDatabaseContext context)
         {
-            var specialization = new Specialization()
-            {
-                Name = "Informatică în limba română"
-            };
+            SpecializationBuilder builder = new SpecializationBuilder();
+            builder.setName("Informatică în limba română");
+            var specialization = builder.getResult();
 
-            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Informatică în limba română")) is null)
-            {
-                context.Specializations.Add(specialization);
-            };
-
-            specialization = new Specialization()
-            {
-                Name = "Informatică în limba engleză"
-            };
-
-            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Informatică în limba engleză")) is null)
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals(specialization.Name)) is null)
             {
                 context.Specializations.Add(specialization);
             };
 
-            specialization = new Specialization()
-            {
-                Name = "Informatică în limba germană"
-            };
+            builder.setName("Informatică în limba engleză");
+            specialization = builder.getResult();
 
-            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Informatică în limba germană")) is null)
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals(specialization.Name)) is null)
             {
                 context.Specializations.Add(specialization);
             };
 
-            specialization = new Specialization()
-            {
-                Name = "Informatică în limba maghiară"
-            };
+            builder.setName("Informatică în limba germană");
+            specialization = builder.getResult();
 
-            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Informatică în limba maghiară")) is null)
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals(specialization.Name)) is null)
             {
                 context.Specializations.Add(specialization);
             };
 
-            specialization = new Specialization()
-            {
-                Name = "Matematică în limba română"
-            };
+            builder.setName("Informatică în limba maghiară");
+            specialization = builder.getResult();
 
-            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Matematică în limba română")) is null)
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals(specialization.Name)) is null)
             {
                 context.Specializations.Add(specialization);
             };
 
-            specialization = new Specialization()
-            {
-                Name = "Matematică în limba engleză"
-            };
+            builder.setName("Informatică în limba română");
+            specialization = builder.getResult();
 
-            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Matematică în limba engleză")) is null)
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals(specialization.Name)) is null)
             {
                 context.Specializations.Add(specialization);
             };
 
-            specialization = new Specialization()
-            {
-                Name = "Matematică în limba germană"
-            };
+            builder.setName("Matematică în limba engleză");
+            specialization = builder.getResult();
 
-            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Matematică în limba germană")) is null)
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals(specialization.Name)) is null)
             {
                 context.Specializations.Add(specialization);
             };
 
-            specialization = new Specialization()
+            builder.setName("Matematică în limba germană");
+            specialization = builder.getResult();
+
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals(specialization.Name)) is null)
             {
-                Name = "Matematică în limba română"
+                context.Specializations.Add(specialization);
             };
 
-            if (context.Specializations.FirstOrDefault(x => x.Name.Equals("Matematică în limba maghiară")) is null)
+            builder.setName("Matematică în limba maghiară");
+            specialization = builder.getResult();
+
+            if (context.Specializations.FirstOrDefault(x => x.Name.Equals(specialization.Name)) is null)
             {
                 context.Specializations.Add(specialization);
             };
@@ -620,32 +510,28 @@ namespace Data
 
         public static void SeedGroup(UMSDatabaseContext context)
         {
-            var group = new Group()
-            {
-                Name = "Group1"
-            };
+            var builder = new GroupBuilder();
 
-            if (context.Groups.FirstOrDefault(x => x.Name.Equals("Group1")) is null)
-            {
-                context.Groups.Add(group);
-            };
+            builder.setName("Group1");
+            Group group = builder.getResult();
 
-            group = new Group()
-            {
-                Name = "Group2"
-            };
-
-            if (context.Groups.FirstOrDefault(x => x.Name.Equals("Group2")) is null)
+            if (context.Groups.FirstOrDefault(x => x.Name.Equals(group.Name)) is null)
             {
                 context.Groups.Add(group);
             };
 
-            group = new Group()
+            builder.setName("Group2");
+            group = builder.getResult();
+
+            if (context.Groups.FirstOrDefault(x => x.Name.Equals(group.Name)) is null)
             {
-                Name = "Group3"
+                context.Groups.Add(group);
             };
 
-            if (context.Groups.FirstOrDefault(x => x.Name.Equals("Group3")) is null)
+            builder.setName("Group3");
+            group = builder.getResult();
+
+            if (context.Groups.FirstOrDefault(x => x.Name.Equals(group.Name)) is null)
             {
                 context.Groups.Add(group);
             };
